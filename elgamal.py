@@ -10,7 +10,14 @@ PARAM_G = 0x3FB32C9B73134D0B2E77506660EDBD484CA7B18F21EF205407F4793A1A0BA12510DB
 
 ### call bruteLog with p = PARAM_P and g = PARAM_G
 
-def bruteLog(g, c, p):
+def bruteLog(c,g=PARAM_G, p=PARAM_P):
+    """
+    Permet de retrouver le logarithme discret de c en base g modulo p
+    Paramètres :
+    c : nombre à retrouver
+    Return : le logarithme 
+    """
+    i = 1
     s = 1
     for i in range(p):
         if s == c:
@@ -20,20 +27,58 @@ def bruteLog(g, c, p):
             return i + 1
     return -1
 
-def EG_generate_keys("""TBC"""):
-
-    return """TBC"""
-
+def EG_generate_keys(p=PARAM_P, q=PARAM_Q, g=PARAM_G):
+    """
+    Paramètres: (par défaut du MODP Group 24)
+    p : grand nombre premier avec
+    q : grand nombre premier avec p = kq + 1
+    g : générateur 
+    Return : (priv, pub) où priv clé privée et pub clé publique
+    """
+    priv = randint(1, q-2)
+    pub = pow(g, priv, p)
+    return (priv,pub)
 ## multiplicative version
-def EGM_encrypt("""TBC"""):
-
-    return """TBC"""
+# (c1,c2) = (g^r,m * pub^r)
+def EGM_encrypt(message,pub):
+    """
+    Chiffre un message avec la clé publique en utilisant la version multiplicative
+    Paramètres : 
+    message : message à chiffré : int
+    pub : clé publique
+    Return :
+    (c1, c2) : message chiffré
+    """
+    r = randint(2, PARAM_Q - 2)
+    c1 = pow(PARAM_G, r, PARAM_P)
+    c2 = (message * pow(pub, r, PARAM_P)) % PARAM_P
+    return c1, c2
 
 ## additive version
-def EGA_encrypt("""TBC"""):
-    return """TBC"""
+#(c1,c2) = (g^r,g^m * pub^r)
+def EGA_encrypt(message,pub):
+    """
+    Chiffre un message avec la clé publique en utilisant la version additive
+    Paramètres :
+    message : message à chiffré
+    pub : clé publique
+    Return :
+    (c1, c2) : message chiffré
+    """
+    r = randint(2, PARAM_Q - 2)
+    c1 = pow(PARAM_G, r, PARAM_P)
+    c2 = (pow(PARAM_G, message, PARAM_P) * pow(pub, r, PARAM_P)) % PARAM_P
+    return c1, c2
 
 
-def EG_decrypt("""TBC"""):
-    return """TBC"""
-
+def EG_decrypt(c1,c2,priv):
+    """
+    Déchiffre un message avec la clé privée
+    Paramètres :
+    c1,c2 : message chiffré
+    priv : clé privée
+    Return : message déchiffré
+    """
+    c_u = pow(c1, priv, PARAM_P)
+    message = c2 * mod_inv(c_u, PARAM_P) % PARAM_P
+    return message
