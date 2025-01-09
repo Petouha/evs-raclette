@@ -34,12 +34,12 @@ def ECDSA_sign(message,priv,nonce=None):
     """
     Signe un message avec la clé privée
     Paramètres :
-    message : message à signer en bytes
+    message : message à signer en bytes (non hashé)
     privatekey : clé privée
     nonce: par défaut généré aléatoirement, ajouté pour les tests uniquement
     Return : (r,s) signature du message
     """
-    hash = H(message)
+    hash = message
     if nonce is None:        
         nonce = ECDSA_generate_nonce()
     
@@ -62,7 +62,7 @@ def ECDSA_verify(message,r,s,pub):
     """
     Vérifie la signature d'un message => (H(m)*s^-1 mod ORDER)*G +(r*s^-1 mod ORDER)*pub
     Paramètres :
-    message : message en bytes
+    message : message en bytes (non hashé)
     r,s : signature
     pub : clé publique
     Return : True si la signature est valide, False sinon
@@ -72,10 +72,10 @@ def ECDSA_verify(message,r,s,pub):
     if s < 1 or s > ORDER - 1:
         return False
     
-    hash = H(message)
-    inv_s = mod_inv(s, ORDER)
+    hash = message
     
     # divise l'equation en deux parties pour la clarté
+    inv_s = mod_inv(s, ORDER)
     u1 = (hash * inv_s) % ORDER
     u2 = (r * inv_s) % ORDER
     
@@ -92,6 +92,7 @@ def ECDSA_verify(message,r,s,pub):
 
 if __name__ == "__main__":
     m= "A very very important message !".encode()
+    m = H(m)
     k = 0x2c92639dcf417afeae31e0f8fddc8e48b3e11d840523f54aaa97174221faee6
     x = 0xc841f4896fe86c971bedbcf114a6cfd97e4454c9be9aba876d5a195995e2ba8
     

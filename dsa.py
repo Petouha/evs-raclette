@@ -33,7 +33,7 @@ def DSA_generate_keys(p=PARAM_P, q=PARAM_Q, g=PARAM_G):
     return (x,X)
 
 
-def DSA_sign(message, privatekey, k=None, p=PARAM_P, q=PARAM_Q, g=PARAM_G):
+def DSA_sign(message:bytes, privatekey, k=None, p=PARAM_P, q=PARAM_Q, g=PARAM_G):
     """
     Signe un message avec la clé privée
     Paramètres : 
@@ -54,7 +54,7 @@ def DSA_sign(message, privatekey, k=None, p=PARAM_P, q=PARAM_Q, g=PARAM_G):
             break
     return (r, s)   
 
-def DSA_verify(X,r,s,message):
+def DSA_verify(X,r,s,message:bytes):
     """
     Vérifie la signature d'un message
     Paramètres :
