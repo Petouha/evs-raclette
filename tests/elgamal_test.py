@@ -9,9 +9,6 @@ import elgamal
 
 # 3.2 Homomorphic encryption : multiplicative version
 def testing_3_2():
-    """
-    NE FONCTIONNE  PAS CORRECTEMENT OU BIEN LE MESSAGE N'EST PAS SENSE ETRE LISIBLE
-    """
     m1 = 0x2661b673f687c5c3142f806d500d2ce57b1182c9b25bfe4fa09529424b
     m2 = 0x1c1c871caabca15828cf08ee3aa3199000b94ed15e743c3
     # Generate keys
