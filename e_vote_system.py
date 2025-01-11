@@ -2,7 +2,7 @@ import ecdsa, ecelgamal,dsa, elgamal
 from algebra import int_to_bytes
 
 
-def elgamal_dsa():
+def elgamal_dsa(nbr_voters=10):
     """
     Implementation en utilisant elgamal pour le chiffrement et dsa pour la signature.
     """   
@@ -19,7 +19,7 @@ def elgamal_dsa():
         votes : une liste des bulletins de vote composé d'un dict avec (chiffre,signature,cle_publique_votant) pour chaque votant
         """
         return_votes = []
-        for i in range(5):
+        for i in range(nbr_voters):
             # Génération des clés du votant
             priv_voter, pub_voter = dsa.DSA_generate_keys()
             # Génération du vote pour les 5 candidats sous forme d'une liste qui contient un seul 1 et des 0
@@ -92,7 +92,7 @@ def elgamal_dsa():
     voting_system(priv_system_vote)
     print("\n-----FIN-----\n")
 
-def elgamal_ecdsa():
+def elgamal_ecdsa(nbr_voters=10):
     """
     Implementation en utilisant elgamal pour le chiffrement et ec dsa pour la signature.
     """   
@@ -109,7 +109,7 @@ def elgamal_ecdsa():
         votes : une liste des bulletins de vote composé d'un dict avec (chiffre,signature,cle_publique_votant) pour chaque votant
         """
         return_votes = []
-        for i in range(5):
+        for i in range(nbr_voters):
             # Génération des clés du votant
             priv_voter, pub_voter = ecdsa.ECDSA_generate_keys()
             # Génération du vote pour les 5 candidats sous forme d'une liste qui contient un seul 1 et des 0
@@ -182,7 +182,7 @@ def elgamal_ecdsa():
     voting_system(priv_system_vote)
     print("\n-----FIN-----\n")
 
-def ecelgamal_dsa():
+def ecelgamal_dsa(nbr_voters=10):
     """
     Implementation en utilisant ecelgamal pour le chiffrement et dsa pour la signature.
     """
@@ -198,7 +198,7 @@ def ecelgamal_dsa():
         votes : une liste des bulletins de vote composé d'un dict avec (chiffre,signature,cle_publique_votant) pour chaque votant
         """
         return_votes = []
-        for i in range(5):
+        for i in range(nbr_voters):
             # Génération des clés du votant
             priv_voter, pub_voter = dsa.DSA_generate_keys()
             # Génération du vote pour les 5 candidats sous forme d'une liste qui contient un seul 1 et des 0
@@ -237,7 +237,7 @@ def ecelgamal_dsa():
         # Génération des votes
         voters = voters_generate(pub_voting_system)
         # Initialisation des résultats du vote
-        results_encrypted = [((1,0),(1,0))]*len(voters)
+        results_encrypted = [((1,0),(1,0))]*5
         results = []
         
         for i,votes in enumerate(voters):
@@ -276,7 +276,7 @@ def ecelgamal_dsa():
     voting_system(priv_voting_system)
     print("\n-----FIN-----\n")      
 
-def ecelgamal_ecdsa():
+def ecelgamal_ecdsa(nbr_voters=10):
     """
     Implementation en utilisant ecelgamal pour le chiffrement et ecdsa pour la signature.
     """
@@ -292,7 +292,7 @@ def ecelgamal_ecdsa():
         votes : une liste des bulletins de vote composé d'un dict avec (chiffre,signature,cle_publique_votant) pour chaque votant
         """
         return_votes = []
-        for i in range(5):
+        for i in range(nbr_voters):
             # Génération des clés du votant
             priv_voter, pub_voter = ecdsa.ECDSA_generate_keys()
             # Génération du vote pour les 5 candidats sous forme d'une liste qui contient un seul 1 et des 0
@@ -331,7 +331,7 @@ def ecelgamal_ecdsa():
         # Génération des votes
         voters = voters_generate(pub_voting_system)
         # Initialisation des résultats du vote
-        results_encrypted = [((1,0),(1,0))]*len(voters)
+        results_encrypted = [((1,0),(1,0))]*5
         results = []
         
         for i,votes in enumerate(voters):
