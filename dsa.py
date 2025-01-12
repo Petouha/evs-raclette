@@ -73,3 +73,25 @@ def DSA_verify(X,r,s,message:bytes):
     t2 = pow(X, u2, PARAM_P)
     v = ((t1 * t2) % PARAM_P) % PARAM_Q
     return v == r
+
+
+if __name__ == '__main__':
+    m = "An important message !"
+    k = 0x7e7f77278fe5232f30056200582ab6e7cae23992bca75929573b779c62ef4759
+    x = 0x49582493d17932dabd014bb712fc55af453ebfb2767537007b0ccff6e857e6a3
+
+
+
+    (sig_r,sig_s) = DSA_sign(m.encode(),x,k)
+
+    r = 0x5ddf26ae653f5583e44259985262c84b483b74be46dec74b07906c5896e26e5a
+    s = 0x194101d2c55ac599e4a61603bc6667dcc23bd2e9bdbef353ec3cb839dcce6ec1
+
+    print(f"sig_r = r : {sig_r == r} et sig_s = s : {sig_s == s}")
+
+
+
+    if DSA_verify(pow(PARAM_G,x,PARAM_P),sig_r,sig_s,m.encode()) : 
+        print("Signature valide")
+    else:
+        print("Signature invalide")

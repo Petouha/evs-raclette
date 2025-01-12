@@ -85,7 +85,6 @@ if __name__ == "__main__":
 
     # Déchiffrement
     dechiffre = ECEG_decrypt((r,c) ,priv)
-    print(f"Point déchiffré : {dechiffre}")
 
     # Recherche brute pour récupérer la somme des messages
     m = bruteECLog(dechiffre[0], dechiffre[1], p)
